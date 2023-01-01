@@ -7,7 +7,7 @@ from fastapi.middleware.cors import CORSMiddleware
 # import os
 # path = os.getenv("MY_DB_URL")
 # print (path) 
-# models.Base.metadata.create_all(bind=engine) # Not needed any more. This is SQLAlchemy to create table (if not exist), but we use alembic now.
+# models.Base.metadata.create_all(bind=engine) # Not needed any more. This is SQLAlchemy to create table (if not exist), but we use alembic now..
 
 app = FastAPI() # To create an instance of it.
 
