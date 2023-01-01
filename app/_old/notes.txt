@@ -1,0 +1,10 @@
+'''
+ https://www.youtube.com/watch?v=0sOvCWFmrtA?t=2040
+
+knenv/scripts/activate
+uvicorn main:app --reload
+'''
+
+#Start the web server:
+# uvicorn main:app --reload
+# Test it in web site at: http://127.0.0.1:8000/
