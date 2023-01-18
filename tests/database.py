@@ -14,9 +14,8 @@ engine = create_engine(SQLALCHEMY_DATABASE_URL)
 
 TestingSessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
 
-@pytest.fixture(scope="module")
+@pytest.fixture
 def session():
-    print("my session fixutre ran")
     Base.metadata.drop_all(bind=engine)    # Used to clear the tables.
     Base.metadata.create_all(bind=engine)  # Used to build the tables.    
     db = TestingSessionLocal()
@@ -25,7 +24,7 @@ def session():
     finally:
         db.close()
 
-@pytest.fixture(scope="module")
+@pytest.fixture
 def client(session):
     def override_get_db():
         try:
