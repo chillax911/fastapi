@@ -16,6 +16,7 @@ TestingSessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engin
 
 @pytest.fixture(scope="module")
 def session():
+    print("my session fixutre ran")
     Base.metadata.drop_all(bind=engine)    # Used to clear the tables.
     Base.metadata.create_all(bind=engine)  # Used to build the tables.    
     db = TestingSessionLocal()
