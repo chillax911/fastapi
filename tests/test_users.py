@@ -11,3 +11,8 @@ def test_create_user(client):
     new_user = schemas.UserOut(**res.json())  # This will have the structure of the schemas.UserOut pydantic model. Now we can test that the structure is correct. 
     assert new_user.email == "hello123@gmail.com"
     assert res.status_code == 201
+
+def test_login_user(client):
+    res = client.post("/login", data={"username": "hello123@gmail.com", "password": "password321"})
+    # print(res.json())  # Useful for debugging
+    assert res.status_code == 200
