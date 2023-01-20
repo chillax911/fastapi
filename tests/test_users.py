@@ -31,7 +31,8 @@ def test_login_user(client, test_user):
     (None                  , 'password321'  , 422), 
     ('hello123@gmail.com'  , None           , 422)
 ])
-def test_incorrect_login(client, test_user, email, passowrd, status_code):
+# def test_incorrect_login(client, test_user, email, passowrd, status_code):
+def test_incorrect_login(client,  email, passowrd, status_code):
     res = client.post("/login", data={"username": email,
                                       "password": passowrd     })
     assert res.status_code == status_code

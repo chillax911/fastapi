@@ -6,6 +6,7 @@ from sqlalchemy import create_engine
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
 from app.database import get_db, Base
+from app import models
 from app.oauth2 import create_access_token
 
 # Note: suffix "_test" for the db name
@@ -56,3 +57,31 @@ def authorized_client(client, token):
         "Authorization": f"Bearer {token}"
     }
     return client
+
+@pytest.fixture
+def test_posts(test_user, session):
+    posts_data = [{
+        "title"   : "first title", 
+        "content" : "first content", 
+        "owner_id": test_user['id']
+    },{
+        "title"   : "2nd title", 
+        "content" : "2nd content", 
+        "owner_id": test_user['id']
+    },{
+        "title"   : "3rd title", 
+        "content" : "3rd content", 
+        "owner_id": test_user['id']
+    }]
+    def create_post_model(post):
+        return models.Post(**post)                 # Convert a dictionary into a post model
+
+    post_map = map(create_post_model, posts_data)  # This maps (converts) from right-to-left (<<<)
+    posts = list(post_map)                         # Convert to a list (from a map)
+    session.add_all(posts)
+    # Long-hand version:
+    # session.add_all([models.Post(title="1st title", content="..", "owner_id"=test_user['id]), models.Post(title="2nd title", content="..", "owner_id"=test_user['id])])
+    session.commit()
+    posts = session.query(models.Post).all()
+    return posts
+
