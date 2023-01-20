@@ -24,3 +24,11 @@ def test_unauthorised_user_get_one_posts(client, test_posts):
 def test_get_one_post_not_exists(authorized_client, test_posts):
     res = authorized_client.get(f"/posts/999")
     assert res.status_code == 404 
+
+def test_get_one_post(authorized_client, test_posts):  # These tests that the data unpacks correctly, and therefore is the structure is ok.
+    res = authorized_client.get(f"/posts/{test_posts[0].id}")
+    # print(res.json())
+    post = schemas.PostOut(**res.json())
+    # print (post)
+    assert post.Post.id == test_posts[0].id
+    assert post.Post.content == test_posts[0].content 
