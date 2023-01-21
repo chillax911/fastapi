@@ -2,7 +2,7 @@ from pydantic import BaseModel, EmailStr
 from datetime import datetime
 from typing import Optional
 from pydantic import conint
-#uvicorn app.main:app --reload 
+#uvicorn app.main:app --reload
 
 class PostBase(BaseModel):
     title: str
@@ -51,7 +51,7 @@ class UserCreate(BaseModel):
     password: str
 
 
-class UserLogin(BaseModel):    
+class UserLogin(BaseModel):
     email: EmailStr
     password: str
 
