@@ -19,7 +19,7 @@ TestingSessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engin
 @pytest.fixture
 def session():
     Base.metadata.drop_all(bind=engine)    # Used to clear the tables.
-    Base.metadata.create_all(bind=engine)  # Used to build the tables.    
+    Base.metadata.create_all(bind=engine)  # Used to build the tables.
     db = TestingSessionLocal()
     try:
         yield db
@@ -33,12 +33,22 @@ def client(session):
             yield session                                # Previously, this was 'yield db'
         finally:
             session.close()                              # Previously, this was 'db.close'
-    app.dependency_overrides[get_db] = override_get_db   # This will swap / substitute get_db, this is used extensively through many files. 
+    app.dependency_overrides[get_db] = override_get_db   # This will swap / substitute get_db, this is used extensively through many files.
     yield TestClient(app)                                # yield is the same as return.
 
 @pytest.fixture
 def test_user(client):
-    user_data = {"email": "hello123@gmail.com", 
+    user_data = {"email": "hello123@gmail.com",
+              "password": "password321"}
+    res = client.post("/users", json=user_data)
+    assert res.status_code == 201
+    new_user = res.json()
+    new_user['password'] = user_data['password']
+    return new_user
+
+@pytest.fixture
+def test_user2(client):
+    user_data = {"email": "hello01@gmail.com",
               "password": "password321"}
     res = client.post("/users", json=user_data)
     assert res.status_code == 201
@@ -59,19 +69,23 @@ def authorized_client(client, token):
     return client
 
 @pytest.fixture
-def test_posts(test_user, session):
+def test_posts(test_user, session, test_user2):
     posts_data = [{
-        "title"   : "first title", 
-        "content" : "first content", 
+        "title"   : "first title",
+        "content" : "first content",
         "owner_id": test_user['id']
     },{
-        "title"   : "2nd title", 
-        "content" : "2nd content", 
+        "title"   : "2nd title",
+        "content" : "2nd content",
         "owner_id": test_user['id']
     },{
-        "title"   : "3rd title", 
-        "content" : "3rd content", 
+        "title"   : "3rd title",
+        "content" : "3rd content",
         "owner_id": test_user['id']
+    },{
+        "title"   : "first title",
+        "content" : "first content",
+        "owner_id": test_user2['id']
     }]
     def create_post_model(post):
         return models.Post(**post)                 # Convert a dictionary into a post model
