@@ -1,12 +1,9 @@
 name: Build and Deploy code
 on: [push, pull_request]
-
-env:
-  DATABASE_HOSTNAME = localhost
-
 jobs:
   job1:
     env:
+      DATABASE_HOSTNAME = localhost
       DATABASE_PORT = 5432
       DATABASE_PASSWORD = password1122233
       DATABASE_NAME = fastapi
