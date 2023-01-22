@@ -6,5 +6,11 @@ jobs:
     steps:
       - name: pulling git repo
         uses: actions/checkout@v3
-      - name: say hi to people
-        run: echo "hello all prople"
+      - name: Install python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.10'
+      - name: update pip
+        run: python -m pip install --upgrade pip
+      - name: installing all dependencies
+        run: pip install -r requirements.txt
