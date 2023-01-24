@@ -69,7 +69,7 @@ jobs:
       # - name: Image digest
       #   run: echo ${{ steps.docker_build.outputs.digest }}
 
-  deploy
+  deploy:
     runs-on: ubuntu-latest
     needs: [build]  # State a prerequisiste, to force a sequential run
 
