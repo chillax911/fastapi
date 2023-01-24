@@ -6,7 +6,7 @@ from fastapi.middleware.cors import CORSMiddleware
 
 # import os
 # path = os.getenv("MY_DB_URL")
-# print (path) 
+# print (path)
 # models.Base.metadata.create_all(bind=engine) # Not needed any more. This is SQLAlchemy to create table (if not exist), but we use alembic now..
 
 app = FastAPI() # To create an instance of it.
@@ -29,5 +29,5 @@ app.include_router(auth.router)
 app.include_router(vote.router)
 
 @app.get("/")
-def root(): 
-    return {"message": "Hello World! Welcome to the New Year!!!"}
+def root():
+    return {"message": "Hello World! Welcome to the New Year!!! Successfully deployed from CI/CD pipeline."}
