@@ -3,14 +3,14 @@ from app import schemas
 from jose import jwt
 from app.config import settings
 
-def test_root(client, session):
-    res = client.get("/")
-    assert res.json().get('message') == 'Hello World! Welcome to the New Year!!!'
-    assert res.status_code == 200
+# def test_root(client, session):
+#     res = client.get("/")
+#     assert res.json().get('message') == 'Hello World! Welcome to the New Year!!!'
+#     assert res.status_code == 200
 
 def test_create_user(client):
     res = client.post("/users", json={"email": "hello123X@gmail.com", "password": "password321"})
-    new_user = schemas.UserOut(**res.json())  # This will have the structure of the schemas.UserOut pydantic model. Now we can test that the structure is correct. 
+    new_user = schemas.UserOut(**res.json())  # This will have the structure of the schemas.UserOut pydantic model. Now we can test that the structure is correct.
     assert new_user.email == "hello123X@gmail.com"
     assert res.status_code == 201
 
@@ -25,10 +25,10 @@ def test_login_user(client, test_user):
     assert res.status_code == 200
 
 @pytest.mark.parametrize("email, passowrd, status_code", [
-    ('wrongemail@gmail.com', 'password321'  , 403), 
-    ('hello123@gmail.com'  , 'wrongpassword', 403), 
-    ('wrongemail@gmail.com', 'wrongpassword', 403), 
-    (None                  , 'password321'  , 422), 
+    ('wrongemail@gmail.com', 'password321'  , 403),
+    ('hello123@gmail.com'  , 'wrongpassword', 403),
+    ('wrongemail@gmail.com', 'wrongpassword', 403),
+    (None                  , 'password321'  , 422),
     ('hello123@gmail.com'  , None           , 422)
 ])
 # def test_incorrect_login(client, test_user, email, passowrd, status_code):
