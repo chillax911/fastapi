@@ -95,4 +95,4 @@ jobs:
           script: |
             cd /app/src
             git pull
-            sudo systemctl restart fastapi
+            echo ${{ secrets.PROD_PASSWORD }} | sudo -S systemctl restart fastapi  # The -S (stdin) option causes sudo to read the password from standard input instead of the terminal device.

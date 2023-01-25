@@ -28,6 +28,6 @@ app.include_router(user.router)
 app.include_router(auth.router)
 app.include_router(vote.router)
 
-# @app.get("/")
-# def root():
-#     return {"message": "Hello World! Welcome to the New Year!!! Successfully deployed from CI/CD pipeline."}
+@app.get("/")
+def root():
+    return {"message": "Hello World! Push out to ubuntu"}
