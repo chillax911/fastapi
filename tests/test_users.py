@@ -3,10 +3,10 @@ from app import schemas
 from jose import jwt
 from app.config import settings
 
-# def test_root(client, session):
-#     res = client.get("/")
-#     assert res.json().get('message') == 'Hello World! Welcome to the New Year!!!'
-#     assert res.status_code == 200
+def test_root(client, session):
+    res = client.get("/")
+    assert res.json().get('message') == 'Hello World! Welcome to the New Year!!! [FORCE TEST TO ERROR]'
+    assert res.status_code == 200
 
 def test_create_user(client):
     res = client.post("/users", json={"email": "hello123X@gmail.com", "password": "password321"})
