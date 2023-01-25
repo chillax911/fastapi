@@ -5,7 +5,7 @@ from app.config import settings
 
 def test_root(client, session):
     res = client.get("/")
-    assert res.json().get('message') == "Hello World! Welcome to the New Year!!! Successfully deployed from CI/CD pipeline."
+    assert res.json().get('message') == "Hello World! Push out to ubuntu"
     assert res.status_code == 200
 
 def test_create_user(client):
